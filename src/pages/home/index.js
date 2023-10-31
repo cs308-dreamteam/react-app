@@ -5,6 +5,8 @@ import Library from "../library";
 import MyPlaylist from "../myPlaylist";
 import RecomPlaylist from "../recomPlaylist";
 import Login from "../authentication/login";
+import SignInUp from "../authentication/sign_in_up";
+
 import { setClientToken } from "../../spotify";
 import "./home.css";
 import Sidebar from "../../components/sidebar";
@@ -28,7 +30,7 @@ export default function Home() {
   }, []);
 
   return !token ? (
-    <Login />
+    <SignInUp />
   ) : (
     <Router>
       <div className="main-body">
