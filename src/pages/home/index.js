@@ -6,10 +6,11 @@ import MyPlaylist from "../myPlaylist";
 import RecomPlaylist from "../recomPlaylist";
 import Login from "../authentication/login";
 import SignInUp from "../authentication/sign_in_up";
+
 import { setClientToken } from "../../spotify";
 import "./home.css";
 import Sidebar from "../../components/sidebar";
-import Navbar from "../../components/navbar";
+
 export default function Home() {
   const [token, setToken] = useState("");
 
@@ -29,10 +30,9 @@ export default function Home() {
   }, []);
 
   return !token ? (
-    <Login />
+    <SignInUp />
   ) : (
     <Router>
-      <Navbar />
       <div className="main-body">
         <Sidebar />
         <Routes>

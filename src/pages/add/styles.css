@@ -1,0 +1,60 @@
+.add-body
+{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.manual-upload-container, .json-upload-container
+{
+    flex:1;
+}
+
+.manual-upload-container
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.manual-upload
+{
+    padding-top: 25%;
+    height: 100%;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+}
+
+.manual-upload>input
+{
+    width: 70%;
+}
+
+.manual-upload>div
+{
+    width: 100%;
+    height: 8%;
+}
+.manual-upload>div>input
+{
+    width: 80%;
+    height: 65%;
+}
+.json-upload
+{
+    flex: 1;
+    height: 50%;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.drive-upload
+{
+    height: 50%;
+}

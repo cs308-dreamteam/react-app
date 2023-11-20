@@ -66,10 +66,8 @@ function Verification(props)
           <input id="v3" class="verification-code" type="text" maxlength="1" required/>
           <input id="v4"class="verification-code" type="text" maxlength="1" required/>
         </div>
-          
         <input type="submit" class="verify-button" value="Verify"/>
       </form>
-      
     </div>
   )
 }
