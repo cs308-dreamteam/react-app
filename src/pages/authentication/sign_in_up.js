@@ -35,8 +35,15 @@ function Verification(props)
       console.log(code);
       if(response.status === 201)
       {
-        window.location.hash = 'userCode=' + code + "&mail=" + props.email + "&user=" + props.username + "&pass=" + props.password;
+        //window.location = 'sessionStart?' + 'userCode=' + code + "&mail=" + props.email + "&user=" + props.username + "&pass=" + props.password;
+
+        const response = await axios.post('http://localhost:3000/login?name=' + props.username + "&pass=" + props.password);
+        console.log(response.data.token);
+
+        localStorage.setItem('token', response.data.token);
         root.render(<Home/>);
+
+
       }
     } catch (error) {
       //console.log(code);

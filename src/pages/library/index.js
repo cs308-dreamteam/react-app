@@ -19,15 +19,32 @@ const SongTable = () => {
   const [songs, setSongs] = useState([]);
 
   useEffect(() => {
-    // Replace 'your_backend_url' with the actual URL of your backend endpoint
-    fetch('your_backend_url')
-      .then((response) => response.json())
-      .then((data) => setSongs(data))
-      .catch((error) => {
-        console.error('Error fetching data:', error)
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/getLibrary', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': localStorage.getItem('token'),
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+  
+        const data = await response.json();
+        setSongs(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+  
+        // If an error occurs, you can set some default or placeholder data
         const randomSongs = Array.from({ length: 10 }, () => generateRandomSong());
         setSongs(randomSongs);
-      });
+      }
+    };
+  
+    fetchData();
   }, []);
 
   return (
