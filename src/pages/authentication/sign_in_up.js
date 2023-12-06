@@ -89,7 +89,7 @@ function Form(props)
       [name]: value,
     });
   }
-  const UsernameInput = props.isSignUp ? (<div className="form-group"><label for="email">Username</label><input type="email" id="email" name="email" onChange={handleChange} placeholder='Email' required/></div>) : ""
+  const UsernameInput = props.isSignUp ? (<div className="form-group"><label for="email">Email</label><input type="email" id="email" name="email" onChange={handleChange} placeholder='Email' required/></div>) : ""
   const uporin = props.isSignUp ? "UP" : "IN"
   const clname = props.rot ? "login-form rotation2" : "login-form";
   const button_text = props.isSignUp ? "Sign Up" : "Sign In"
@@ -125,9 +125,13 @@ function Form(props)
         if(response.status === 201)
         {
           //pick here the verification board
-          document.querySelector('.login-form').remove();
-          ReactDOM.createRoot(document.querySelector('.mini-body')).render(<Verification email={formData.email} username={formData.username} password={formData.password}/>);
-        }
+          //document.querySelector('.login-form').remove();
+          //const response = await axios.post('http://localhost:3000/login?name=' + props.username + "&pass=" + props.password);
+          console.log(response.data.token);
+  
+          localStorage.setItem('token', response.data.token);
+          root.render(<Home/>);
+      }
       } catch (error) {
         console.error('Error:', error);
       }
@@ -147,7 +151,7 @@ function Form(props)
         <form className="login" onSubmit={handleSubmit}>
           {UsernameInput}
           <div className="form-group">
-              <label for="username">Email</label>
+              <label for="username">Username</label>
               <input type="text" id="username" name="username" onChange={handleChange} placeholder='Username' required/>
           </div>
           
