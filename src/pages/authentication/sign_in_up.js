@@ -89,7 +89,7 @@ function Form(props)
       [name]: value,
     });
   }
-  const UsernameInput = props.isSignUp ? (<div className="form-group"><label for="username">Username</label><input type="username" id="username" name="username" onChange={handleChange} placeholder='Username' required/></div>) : ""
+  const UsernameInput = props.isSignUp ? (<div className="form-group"><label for="email">Username</label><input type="email" id="email" name="email" onChange={handleChange} placeholder='Email' required/></div>) : ""
   const uporin = props.isSignUp ? "UP" : "IN"
   const clname = props.rot ? "login-form rotation2" : "login-form";
   const button_text = props.isSignUp ? "Sign Up" : "Sign In"
@@ -101,19 +101,40 @@ function Form(props)
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    try {
-      // Send a POST request using Axios
-      const response = await axios.post('http://localhost:3000/send-verification-email?userEmail=' + formData.email);
-      console.log('Response from server:', response.data);
-      if(response.status === 201)
-      {
-        //pick here the verification board
-        document.querySelector('.login-form').remove();
-        ReactDOM.createRoot(document.querySelector('.mini-body')).render(<Verification email={formData.email} username={formData.username} password={formData.password}/>);
+    if(isSignUp){
+      try {
+        // Send a POST request using Axios
+        const response = await axios.post('http://localhost:3000/send-verification-email?userEmail=' + formData.email);
+        console.log('Response from server:', response.data);
+        if(response.status === 201)
+        {
+          //pick here the verification board
+          document.querySelector('.login-form').remove();
+          ReactDOM.createRoot(document.querySelector('.mini-body')).render(<Verification email={formData.email} username={formData.username} password={formData.password}/>);
+        }
+      } catch (error) {
+        console.error('Error:', error);
       }
-    } catch (error) {
-      console.error('Error:', error);
     }
+    else
+    {
+      try {
+        // Send a POST request using Axios
+        const response = await axios.post('http://localhost:3000/login?name=' + formData.username + '&pass='+ formData.password);
+        console.log('Response from server:', response.data);
+        if(response.status === 201)
+        {
+          //pick here the verification board
+          document.querySelector('.login-form').remove();
+          ReactDOM.createRoot(document.querySelector('.mini-body')).render(<Verification email={formData.email} username={formData.username} password={formData.password}/>);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+
+
+
   }
 
 
@@ -124,12 +145,12 @@ function Form(props)
       <div className='upper-body'>
         <Title l1="Sign" l2={uporin}/>
         <form className="login" onSubmit={handleSubmit}>
-          
-          <div className="form-group">
-              <label for="email">Email</label>
-              <input type="text" id="email" name="email" onChange={handleChange} placeholder='Email' required/>
-          </div>
           {UsernameInput}
+          <div className="form-group">
+              <label for="username">Email</label>
+              <input type="text" id="username" name="username" onChange={handleChange} placeholder='Username' required/>
+          </div>
+          
           <div className="form-group">
               <label for="password">Password</label>
               <input type="password" id="password" name="password" onChange={handleChange} placeholder='Password' required/>
