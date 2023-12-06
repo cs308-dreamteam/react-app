@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+
+import Deneme from "../deneme";
+
 import Add from "../add";
 import Library from "../library";
 import MyPlaylist from "../myPlaylist";
 import RecomPlaylist from "../recomPlaylist";
 import Login from "../authentication/login";
 import SignInUp from "../authentication/sign_in_up";
+
+
+
 
 import { setClientToken } from "../../spotify";
 import "./home.css";
@@ -40,6 +47,8 @@ export default function Home() {
           <Route path="/add" element={<Add />} />
           <Route path="/recomPlaylist" element={<RecomPlaylist />} />
           <Route path="/myplaylist" element={<MyPlaylist />} />
+
+          <Route path="/deneme" element={<Deneme />} />
         </Routes>
       </div>
     </Router>

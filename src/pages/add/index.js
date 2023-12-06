@@ -3,6 +3,35 @@ import React , { createRoot } from "react";
 import './styles.css'
 import { useState } from 'react';
 
+import GooglePicker from 'react-google-picker';
+
+const GoogleDrivePicker = () => {
+  // Replace 'your-google-api-key' with your actual Google API key
+  const developerKey = 'your-google-api-key';
+  const clientId = 'your-client-id';
+
+  const onSelect = (data) => {
+    if (data.docs && data.docs.length > 0) {
+      const selectedFile = data.docs[0];
+      console.log('Selected File:', selectedFile);
+      // Handle the selected file, e.g., save it to state or send it to the backend
+    }
+  };
+
+  return (
+    <GooglePicker
+      clientId={clientId}
+      developerKey={developerKey}
+      scope={['https://www.googleapis.com/auth/drive.file']}
+      onChange={onSelect}
+    >
+      <button>Select File from Google Drive</button>
+    </GooglePicker>
+  );
+};
+
+
+
 function JsonFileDropzone () {
   const [file, setFile] = useState("");
 
@@ -73,7 +102,7 @@ function JsonFileDropzone () {
       </div>
       <button onClick={handleClick}>Upload</button>
 
-      <div className="drive-upload">UPLOAD WITH DRIVE</div>
+      <GoogleDrivePicker />
     </div>
 
   );
@@ -191,6 +220,9 @@ const Form = () => {
     </div>
   );
 };
+
+
+
 
 
 export default function Add() {

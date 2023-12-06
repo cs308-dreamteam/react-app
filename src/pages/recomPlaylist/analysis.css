@@ -1,0 +1,11 @@
+.analysis-table
+{
+    width: 100%;
+}
+
+canvas
+{
+    width: 100%;
+    padding: 5%;
+    /*background-color: orange;*/
+}
