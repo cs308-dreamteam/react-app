@@ -33,7 +33,12 @@ const SongTable = () => {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
   
+        // Parse the response body as JSON
         const data = await response.json();
+        console.log("HERE");
+        console.log(data);
+  
+        // Set the state with the parsed JSON data
         setSongs(data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -46,6 +51,7 @@ const SongTable = () => {
   
     fetchData();
   }, []);
+  
 
   return (
     <div className='song_table'>
@@ -62,9 +68,9 @@ const SongTable = () => {
         </thead>
         <tbody>
           {songs.map((song) => (
-            <tr key={song.id}>
-              <td>{song.title}</td>
-              <td>{song.artists.join(', ')}</td>
+            <tr key={song.song}>
+              <td>{song.song}</td>
+              <td>{song.artist}</td>
               <td>{song.album}</td>
               <td>{song.genre}</td>
               <td>{song.rating}</td>
