@@ -52,6 +52,39 @@ const SongTable = () => {
     fetchData();
   }, []);
   
+  // Create a map to store unique songs based on their titles
+  const uniqueSongsMap = new Map();
+
+  // Iterate through the songs and update the map
+  songs.forEach((song) => {
+    const { title, album, genre, rating, artist } = song;
+
+    // If the song title is not in the map, add it with the current details
+    if (!uniqueSongsMap.has(title)) {
+      uniqueSongsMap.set(title, {
+        title: title,
+        artists: artist,
+        albums: album,
+        genres: genre,
+        rating: rating,
+      });
+    } else {
+      
+      // If the song title is already in the map, update the details
+      uniqueSongsMap.get(title).artists += (", " + artist);
+      uniqueSongsMap.get(title).albums += (", " + album);
+      uniqueSongsMap.get(title).genres += (", " + genre);
+      // You might want to update the rating differently, depending on your requirements
+      // For simplicity, this example keeps the rating of the first occurrence
+    }
+  });
+
+  // Convert the map values (unique songs) to an array
+  const uniqueSongsArray = Array.from(uniqueSongsMap.values());
+
+  // Now, uniqueSongsArray contains the desired JSON structure
+  console.log("below y")
+  console.log(uniqueSongsArray);
 
   return (
     <div className='song_table'>
@@ -67,12 +100,12 @@ const SongTable = () => {
           </tr>
         </thead>
         <tbody>
-          {songs.map((song) => (
-            <tr key={song.song}>
-              <td>{song.song}</td>
-              <td>{song.artist}</td>
-              <td>{song.album}</td>
-              <td>{song.genre}</td>
+          {uniqueSongsArray.map((song) => (
+            <tr key={song.title}>
+              <td>{song.title}</td>
+              <td>{song.artists}</td>
+              <td>{song.albums}</td>
+              <td>{song.genres}</td>
               <td>{song.rating}</td>
             </tr>
           ))}

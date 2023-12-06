@@ -69,7 +69,7 @@ function JsonFileDropzone () {
     try {
       // Send POST request to localhost:3000
       console.log(file);
-      const response = await fetch('http://localhost:3000', {
+      const response = await fetch('http://localhost:3000/add_song', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
