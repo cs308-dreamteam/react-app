@@ -101,7 +101,7 @@ function Form(props)
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if(isSignUp){
+    if(props.isSignUp){
       try {
         // Send a POST request using Axios
         const response = await axios.post('http://localhost:3000/send-verification-email?userEmail=' + formData.email);
