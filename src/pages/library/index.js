@@ -87,6 +87,28 @@ const SongTable = () => {
     fetchData();
   }, []);
 
+  const handleDeleteClick = async (title) => {
+    try {
+      const response = await fetch('http://localhost:3000/delete_song', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': localStorage.getItem('token'),
+        },
+        body: JSON.stringify({ title }), // Send the title in the request body
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      // Handle success, maybe update the state or fetch the updated data
+      console.log('Song deleted successfully!');
+    } catch (error) {
+      console.error('Error deleting song:', error);
+    }
+  };
+
   return (
     <div className='song_table'>
       <h2>My Library</h2>
@@ -98,16 +120,20 @@ const SongTable = () => {
             <th>Album</th>
             <th>Genre</th>
             <th>Rating</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
           {combineSongs(songs).map((song) => (
-            <tr>
+            <tr key={song.song}>
               <td>{song.song}</td>
               <td>{song.artist}</td>
               <td>{song.album}</td>
               <td>{song.genre}</td>
               <td>{song.rating}</td>
+              <td>
+                <button onClick={() => handleDeleteClick(song.song)}>DELETE</button>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -115,6 +141,7 @@ const SongTable = () => {
     </div>
   );
 };
+
 
 
 
