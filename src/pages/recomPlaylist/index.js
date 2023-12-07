@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Bar } from 'react-chartjs-2';
-import './analysis.css'
 import Chart from 'chart.js/auto';
+import './analysis.css';
+
 const SongListHistogram = () => {
   const [chart, setChart] = useState(null);
-
   const [songs, setSongs] = useState([]);
+  const [type, setType] = useState('genre');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,82 +17,56 @@ const SongListHistogram = () => {
             'x-access-token': localStorage.getItem('token'),
           },
         });
-  
+
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-  
-        // Parse the response body as JSON
+
         const data = await response.json();
-        console.log("HERE");
-        console.log(data);
-  
-        // Set the state with the parsed JSON data
         setSongs(data);
       } catch (error) {
         console.error('Error fetching data:', error);
-  /*
-        // If an error occurs, you can set some default or placeholder data
-        const randomSongs = Array.from({ length: 10 }, () => generateRandomSong());
-        setSongs(randomSongs);*/
       }
     };
-  
+
     fetchData();
   }, []);
 
   useEffect(() => {
     if (chart) {
-      chart.destroy(); // Destroy the existing chart before rendering a new one
+      chart.destroy();
     }
 
     if (songs.length > 0) {
       const newChart = new Chart('songListChart', {
         type: 'bar',
-        data: generateHistogramData(),
+        data: generateHistogramData(type),
         options: histogramOptions,
       });
       setChart(newChart);
     }
-  }, [songs]);
-/*
-  const generateSampleData = (count) => {
-    // Generate sample data with random values for testing
-    const genres = ['Pop', 'Rock', 'Hip Hop', 'Country', 'Jazz'];
-    const sampleData = [];
+  }, [songs, type]);
 
-    for (let i = 0; i < count; i++) {
-      const randomGenre = genres[Math.floor(Math.random() * genres.length)];
-      sampleData.push({
-        title: `Song ${i + 1}`,
-        artist: `Artist ${i + 1}`,
-        album: `Album ${i + 1}`,
-        genre: randomGenre,
-        rating: Math.floor(Math.random() * 5) + 1, // Random rating between 1 and 5
-      });
-    }
+  const generateHistogramData = (selectedType) => {
+    const dataMap = new Map();
 
-    return sampleData;
-  };*/
-
-  const generateHistogramData = () => {
-    const genresMap = new Map();
-
-    // Count the occurrences of each genre
-    songs.forEach(song => {
-      const genre = song.genre;
-      genresMap.set(genre, (genresMap.get(genre) || 0) + 1);
+    songs.forEach((song) => {
+      const key = selectedType === 'genre' ? song.genre :
+                  selectedType === 'artist' ? song.artist : song.album;
+  
+      const songSet = dataMap.get(key) || new Set();
+      songSet.add(song.song); // Assuming "title" is the property containing the song name
+      dataMap.set(key, songSet);
     });
-
-    // Convert the map data to arrays for Chart.js
-    const labels = [...genresMap.keys()];
-    const data = [...genresMap.values()];
-
+  
+    const labels = [...dataMap.keys()];
+    const data = labels.map((key) => dataMap.get(key).size);
+  
     return {
       labels,
       datasets: [
         {
-          label: 'Number of Songs',
+          label: `Number of ${selectedType}s`,
           backgroundColor: 'rgba(75,192,192,0.6)',
           borderColor: 'rgba(75,192,192,1)',
           borderWidth: 1,
@@ -107,16 +81,28 @@ const SongListHistogram = () => {
   const histogramOptions = {
     scales: {
       x: {
-        type: 'category', // Use 'category' for string values (e.g., genres)
-        title: { display: true, text: 'Genres' },
+        type: 'category',
+        title: { display: true, text: `${type.charAt(0).toUpperCase() + type.slice(1)}s` },
       },
       y: { title: { display: true, text: 'Number of Songs' }, beginAtZero: true },
     },
   };
 
+  const handleTypeChange = (e) => {
+    setType(e.target.value);
+  };
+
   return (
     <div className='analysis-table'>
       <h2>Song List Histogram</h2>
+      <div>
+        <label>Select Type: </label>
+        <select value={type} onChange={handleTypeChange}>
+          <option value="genre">Genre</option>
+          <option value="artist">Artist</option>
+          <option value="album">Album</option>
+        </select>
+      </div>
       <div>
         <canvas id="songListChart"></canvas>
       </div>
@@ -125,7 +111,5 @@ const SongListHistogram = () => {
 };
 
 export default function RecomPlaylist() {
-  return (
-    <SongListHistogram />
-  );
+  return <SongListHistogram />;
 }

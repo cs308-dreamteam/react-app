@@ -42,9 +42,9 @@ const combineSongs = (songList) => {
 
   // Format arrays to strings
   resultArray.forEach((songInfo) => {
-    songInfo.album = songInfo.album.join(', ');
-    songInfo.genre = songInfo.genre.join(', ');
-    songInfo.artist = songInfo.artist.join(', ');
+    songInfo.album = [...new Set(songInfo.album)].join(', ');
+    songInfo.genre = [...new Set(songInfo.genre)].join(', ');
+    songInfo.artist = [...new Set(songInfo.artist)].join(', ');
   });
 
   return resultArray;
