@@ -3,20 +3,42 @@ import { Bar } from 'react-chartjs-2';
 import './analysis.css'
 import Chart from 'chart.js/auto';
 const SongListHistogram = () => {
-  const [songList, setSongList] = useState([]);
   const [chart, setChart] = useState(null);
 
+  const [songs, setSongs] = useState([]);
+
   useEffect(() => {
-    // Fetch song list from the backend API endpoint
-    fetch('/api/songList')  // Replace with your actual API endpoint
-      .then(response => response.json())
-      .then(data => setSongList(data))
-      .catch(error => {
-        console.error('Error fetching song list:', error);
-        // In case of an error, populate with sample data
-        const sampleData = generateSampleData(50);
-        setSongList(sampleData);
-      });
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/getLibrary', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': localStorage.getItem('token'),
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+  
+        // Parse the response body as JSON
+        const data = await response.json();
+        console.log("HERE");
+        console.log(data);
+  
+        // Set the state with the parsed JSON data
+        setSongs(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+  /*
+        // If an error occurs, you can set some default or placeholder data
+        const randomSongs = Array.from({ length: 10 }, () => generateRandomSong());
+        setSongs(randomSongs);*/
+      }
+    };
+  
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -24,7 +46,7 @@ const SongListHistogram = () => {
       chart.destroy(); // Destroy the existing chart before rendering a new one
     }
 
-    if (songList.length > 0) {
+    if (songs.length > 0) {
       const newChart = new Chart('songListChart', {
         type: 'bar',
         data: generateHistogramData(),
@@ -32,8 +54,8 @@ const SongListHistogram = () => {
       });
       setChart(newChart);
     }
-  }, [songList]);
-
+  }, [songs]);
+/*
   const generateSampleData = (count) => {
     // Generate sample data with random values for testing
     const genres = ['Pop', 'Rock', 'Hip Hop', 'Country', 'Jazz'];
@@ -51,13 +73,13 @@ const SongListHistogram = () => {
     }
 
     return sampleData;
-  };
+  };*/
 
   const generateHistogramData = () => {
     const genresMap = new Map();
 
     // Count the occurrences of each genre
-    songList.forEach(song => {
+    songs.forEach(song => {
       const genre = song.genre;
       genresMap.set(genre, (genresMap.get(genre) || 0) + 1);
     });

@@ -73,6 +73,7 @@ function JsonFileDropzone () {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'x-access-token': localStorage.getItem('token'),
         },
         body: file,
       });
@@ -182,10 +183,11 @@ const Form = () => {
 
     try {
       // Send POST request to localhost:3000
-      const response = await fetch('http://localhost:3000', {
+      const response = await fetch('http://localhost:3000/add_song', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'x-access-token': localStorage.getItem('token'),
         },
         body: JSON.stringify(requestBody),
       });

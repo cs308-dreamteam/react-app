@@ -15,6 +15,41 @@ const generateRandomSong = () => {
   };
 };
 
+const combineSongs = (songList) => {
+  const combinedSongs = {};
+
+  // Combine songs with the same name
+  songList.forEach((songInfo) => {
+    const { song, album, genre, rating, artist } = songInfo;
+
+    if (!combinedSongs[song]) {
+      combinedSongs[song] = {
+        song,
+        album: [album],
+        genre: [genre],
+        rating,
+        artist: [artist],
+      };
+    } else {
+      combinedSongs[song].album.push(album);
+      combinedSongs[song].genre.push(genre);
+      combinedSongs[song].artist.push(artist);
+    }
+  });
+
+  // Convert combined songs object to an array
+  const resultArray = Object.values(combinedSongs);
+
+  // Format arrays to strings
+  resultArray.forEach((songInfo) => {
+    songInfo.album = songInfo.album.join(', ');
+    songInfo.genre = songInfo.genre.join(', ');
+    songInfo.artist = songInfo.artist.join(', ');
+  });
+
+  return resultArray;
+};
+
 const SongTable = () => {
   const [songs, setSongs] = useState([]);
 
@@ -51,40 +86,6 @@ const SongTable = () => {
   
     fetchData();
   }, []);
-  
-  // Create a map to store unique songs based on their titles
-  const uniqueSongsMap = new Map();
-
-  // Iterate through the songs and update the map
-  songs.forEach((song) => {
-    const { title, album, genre, rating, artist } = song;
-
-    // If the song title is not in the map, add it with the current details
-    if (!uniqueSongsMap.has(title)) {
-      uniqueSongsMap.set(title, {
-        title: title,
-        artists: artist,
-        albums: album,
-        genres: genre,
-        rating: rating,
-      });
-    } else {
-      
-      // If the song title is already in the map, update the details
-      uniqueSongsMap.get(title).artists += (", " + artist);
-      uniqueSongsMap.get(title).albums += (", " + album);
-      uniqueSongsMap.get(title).genres += (", " + genre);
-      // You might want to update the rating differently, depending on your requirements
-      // For simplicity, this example keeps the rating of the first occurrence
-    }
-  });
-
-  // Convert the map values (unique songs) to an array
-  const uniqueSongsArray = Array.from(uniqueSongsMap.values());
-
-  // Now, uniqueSongsArray contains the desired JSON structure
-  console.log("below y")
-  console.log(uniqueSongsArray);
 
   return (
     <div className='song_table'>
@@ -100,12 +101,12 @@ const SongTable = () => {
           </tr>
         </thead>
         <tbody>
-          {uniqueSongsArray.map((song) => (
-            <tr key={song.title}>
-              <td>{song.title}</td>
-              <td>{song.artists}</td>
-              <td>{song.albums}</td>
-              <td>{song.genres}</td>
+          {combineSongs(songs).map((song) => (
+            <tr>
+              <td>{song.song}</td>
+              <td>{song.artist}</td>
+              <td>{song.album}</td>
+              <td>{song.genre}</td>
               <td>{song.rating}</td>
             </tr>
           ))}
