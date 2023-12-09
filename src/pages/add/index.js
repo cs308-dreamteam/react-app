@@ -96,7 +96,7 @@ function JsonFileDropzone () {
         className="json-upload"
       >
         {file ? (
-          <p>File uploaded: {file.name}</p>
+          <p>File uploaded: {file}</p>
         ) : (
           <p>Drag and drop a JSON file here</p>
         )}

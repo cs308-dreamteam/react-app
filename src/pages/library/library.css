@@ -1,9 +1,9 @@
+/* library.css */
 
 .song_table {
   width: 100%;
-  padding-top: 2.5%;
-  padding-left: 10%;
-  padding-right: 10%;
+  padding: 2.5% 2%; /* Adjusted padding for responsiveness */
+  overflow-x: auto; /* Enable horizontal scrolling on smaller screens */
 }
 
 h2 {
@@ -44,4 +44,17 @@ tr:nth-child(even) {
 
 tr:nth-child(even):hover {
   background-color: #ffebcd; /* Lightest Brown */
+}
+
+button {
+  background-color: #e74c3c; /* Alizarin */
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #c0392b; /* Pomegranate */
 }

@@ -1,0 +1,57 @@
+/* profile.css */
+
+.user-info {
+    padding: 5%;
+    background-color: #f8f9fa; /* Add a light background color for better readability */
+    border-radius: 8px; /* Add border-radius for a slight border curve */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow for depth */
+  }
+  
+  h2 {
+    color: #007bff; /* Update heading color to a shade of blue */
+  }
+  
+  .profile-page-photo {
+    width: 100%; /* Make the profile photo responsive to its container */
+    max-width: 200px; /* Set a maximum width to prevent oversized images */
+    border-radius: 50%; /* Make the profile photo circular */
+    margin-top: 10px; /* Add margin for separation from other content */
+  }
+  
+  .camera-popup {
+    padding: 5%;
+    background-color: #ffffff; /* Set a white background for the camera popup */
+    border-radius: 8px; /* Add border-radius for a slight border curve */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow for depth */
+  }
+  
+  .taste-details {
+    padding: 5%;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .taste-details h2 {
+    color: #28a745;
+    margin-bottom: 20px; /* Add more space below the heading */
+  }
+  
+  .taste-details ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .taste-details li {
+    border-bottom: 1px solid #dee2e6; /* Add a subtle border between list items */
+    padding: 10px 0;
+  }
+  
+  .taste-details li:last-child {
+    border-bottom: none; /* Remove border from the last list item */
+  }
+  
+  .taste-details strong {
+    color: #6c757d;
+  }
+  

@@ -247,7 +247,7 @@ function SignInUp() {
         <Navbar/>
         <div className="mini-body">
         <div className='sider'/>
-        <Form isSignUp={true}/>
+        <Form isSignUp={false}/>
         <div className='sider'/>
         </div>
     </>

@@ -10,8 +10,8 @@ import MyPlaylist from "../myPlaylist";
 import RecomPlaylist from "../recomPlaylist";
 import Login from "../authentication/login";
 import SignInUp from "../authentication/sign_in_up";
-
-
+import Profile from "../profile";
+import Logout from "../logout";
 
 
 import { setClientToken } from "../../spotify";
@@ -47,8 +47,9 @@ export default function Home() {
           <Route path="/add" element={<Add />} />
           <Route path="/recomPlaylist" element={<RecomPlaylist />} />
           <Route path="/myplaylist" element={<MyPlaylist />} />
-
+          <Route path="/profile" element={<Profile />} />
           <Route path="/deneme" element={<Deneme />} />
+          <Route path="/logout" element={<Logout />} />
         </Routes>
       </div>
     </Router>

@@ -74,13 +74,14 @@ const SongTable = () => {
         console.log(data);
   
         // Set the state with the parsed JSON data
+        
         setSongs(data);
       } catch (error) {
         console.error('Error fetching data:', error);
-  
-        // If an error occurs, you can set some default or placeholder data
-        const randomSongs = Array.from({ length: 10 }, () => generateRandomSong());
-        setSongs(randomSongs);
+
+        localStorage.setItem('token', '');
+        window.location.reload();
+
       }
     };
   

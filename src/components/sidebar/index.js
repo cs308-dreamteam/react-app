@@ -5,23 +5,45 @@ import { SiGoogleanalytics } from "react-icons/si";
 import { IoLibrary } from "react-icons/io5";
 import { CgAdd } from "react-icons/cg";
 import { FaSignOutAlt } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 /*import apiClient from "../../spotify";*/
 import "./sidebar.css";
 
 export default function Sidebar() {
-  const [image, setImage] = useState(
-    "https://static.ticimax.cloud/cdn-cgi/image/width=530,quality=85/6389/uploads/urunresimleri/buyuk/mustafa-kemal-ataturk-portre-iii-kanva-b4c3-4.jpg"
-  );/*
-  useEffect(() => {
-    apiClient.get("me").then((response) => {
-      if (response.data.images && response.data.images.length > 0) {
-        setImage(response.data.images[0].url);
+
+  const [image, setImage] = useState("");
+
+  useEffect(() =>{
+    const fetchData = async () =>{
+      try{
+        const response = await fetch("http://localhost:3000/get_user", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            'x-access-token': localStorage.getItem('token'),
+          },
+        });
+
+        const userData = await response.json();
+        setImage(userData.avatarBase64)
       }
-    });
-  }, []);*/
+      catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+    }
+
+    fetchData();
+    const intervalId = setInterval(fetchData, 1000);
+    return () => clearInterval(intervalId);
+  }, [])
+
+  
   return (
     <div className="sidebar-container">
-      <img src={image} className="profile_img" alt="profile" />
+      <Link to="/profile">
+      <img src={`data:image/jpeg;base64, ${image}`} className='pp' alt="User Avatar" />
+      </Link>
+      
       <div>
       <SidebarButton title="spoti deneme" to="/deneme"  />
         <SidebarButton title="Add Song" to="/add" icon={<CgAdd />} />
@@ -37,7 +59,7 @@ export default function Sidebar() {
         />
         <SidebarButton title="Libray" to="/" icon={<IoLibrary />} />
       </div>
-      <SidebarButton title="Sign Out" to="" icon={<FaSignOutAlt />} />
+      <SidebarButton title="Sign Out" to=""  icon={<FaSignOutAlt />} />
     </div>
   );
 }
