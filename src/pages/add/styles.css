@@ -1,60 +1,108 @@
-.add-body
-{
+.add-body {
     width: 100%;
     display: flex;
     flex-direction: row;
-}
-
-.manual-upload-container, .json-upload-container
-{
-    flex:1;
-}
-
-.manual-upload-container
-{
+  }
+  
+  .manual-upload-container,
+  .json-upload-container {
+    flex: 1;
+    overflow: auto;
+  }
+  
+  .manual-upload-container {
+    padding-top: 5%; 
     display: flex;
     align-items: center;
     justify-content: center;
-}
-.manual-upload
-{
-    padding-top: 25%;
+  }
+  
+  .manual-upload {
+    padding: 20px;
     height: 100%;
     width: 90%;
     display: flex;
     flex-direction: column;
-}
-
-.manual-upload>input
-{
-    width: 70%;
-}
-
-.manual-upload>div
-{
+    overflow: auto;
+  }
+  
+  .manual-upload>div {
+    display: flex;
+    flex-direction: row; /* Adjusted for better alignment */
+    justify-content: space-between;
+    align-items: center; /* Centered items vertically */
     width: 100%;
-    height: 8%;
-}
-.manual-upload>div>input
-{
-    width: 80%;
-    height: 65%;
-}
-.json-upload
-{
+    margin-bottom: 10px;
+  }
+  
+  .manual-upload>div>label {
+    margin-right: 10px; /* Added margin for spacing between label and input */
+  }
+  
+  .manual-upload>div>input {
+    flex: 1; /* Expanded input to take remaining space */
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  
+  .manual-upload>div .add-button {
+    margin-left: 10px; /* Added margin for spacing between input and button */
+    padding: 10px 15px;
+  }
+  
+  .json-upload {
     flex: 1;
     height: 50%;
     border: 2px dashed #ccc;
     border-radius: 8px;
-
-
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-}
-
-.drive-upload
-{
+    margin: 20px;
+  }
+  
+  .drive-upload {
     height: 50%;
-}
+  }
+  
+  .manual-upload-container {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .manual-upload {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .manual-upload>input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+  }
+  
+  .manual-upload>div {
+    margin-bottom: 10px;
+  }
+  
+  .add-button,
+  .submit-button,
+  .google-drive-button,
+  .upload-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .add-button:hover,
+  .submit-button:hover,
+  .google-drive-button:hover,
+  .upload-button:hover {
+    background-color: #45a049;
+  }
+  

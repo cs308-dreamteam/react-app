@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./profile.css";
+import CircularJSON from 'circular-json';
 
 const CameraComponent = ({ onClose }) => {
   const [imageSrc, setImageSrc] = useState(null);
@@ -281,10 +282,10 @@ const Network = () => {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-
+      /*
       let data = await response.json();
       data = data.result.map(user => user.username);
-      setUserData(data);
+      setUserData(data);*/
 
     } catch (error) {
       console.error("Error fetching user data:", error);
@@ -330,12 +331,71 @@ const Network = () => {
   }, [count]); 
 
 
+  const [followeds, setFolloweds] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/followed_users", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            'x-access-token': localStorage.getItem('token'),
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        const array = data.followed_users.map(user => user.followed);
+        setFolloweds(array);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+    fetchData();
+    const intervalId = setInterval(fetchData, 1000);
+    return () => clearInterval(intervalId);
+  }, []);
+
+  const [inputValue2, setInputValue2] = useState('');
+
+  const handleInputChange2 = (e) => {
+    setInputValue2(e.target.value);
+  };
+  const [followed_top5, setFollowed_top5] = useState([]);
+  let slack = '';
+  const getUserInfo = async  () => {
+    try {
+      
+      const response = await fetch("http://localhost:3000/get_top5?user=" +inputValue2, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          'x-access-token': localStorage.getItem('token'),
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const array = data.songs.map(song => song.songTitle);
+      console.log(array);
+      setFollowed_top5(array);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  }
+
+
 
 
   return (
     <div>
       <p>Follower count: {count}</p>
-      <label htmlFor="autocomplete">Choose a user to follow:</label>
+      <label htmlFor="autocomplete">Choose a user to follow:</label> <br/>
       <input
         type="text"
         id="autocomplete"
@@ -348,6 +408,38 @@ const Network = () => {
         ))}
       </datalist>
       <button onClick={handleClick}>follow</button>
+      <br/><br/>
+
+      <label htmlFor="autocomplete2">Users I follow: </label> <br/>
+      <input
+        type="text"
+        id="autocomplete2"
+        list="options2"
+        onChange={handleInputChange2}
+      />
+      <datalist id="options2">
+        {followeds.map((option, index) => (
+          <option key={index} value={option} />
+        ))}
+      </datalist>
+      <button onClick={getUserInfo}> Get info </button>
+
+      <div>
+      {followed_top5.length > 0 ? (
+        <div>
+          <h2>{inputValue2} Top 5:</h2>
+          <ul>
+            {followed_top5.map((song, index) => (
+              <li key={index}>{song}</li>
+            ))}
+          </ul>
+        </div>
+      ) : (
+        <p></p>
+      )}
+    </div>
+
+
     </div>
   )
 }

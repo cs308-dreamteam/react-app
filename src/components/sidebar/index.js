@@ -37,7 +37,7 @@ export default function Sidebar() {
     return () => clearInterval(intervalId);
   }, [])
 
-  
+  //<SidebarButton title="spoti deneme" to="/deneme"  />
   return (
     <div className="sidebar-container">
       <Link to="/profile">
@@ -45,7 +45,7 @@ export default function Sidebar() {
       </Link>
       
       <div>
-      <SidebarButton title="spoti deneme" to="/deneme"  />
+      
         <SidebarButton title="Add Song" to="/add" icon={<CgAdd />} />
         <SidebarButton
           title="analysis"

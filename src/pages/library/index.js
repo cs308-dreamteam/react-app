@@ -103,6 +103,9 @@ const SongTable = () => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
+      //setSongs((prevSongs) => prevSongs.filter((song) => song.title !== title));
+      //window.location.reload();
+
       // Handle success, maybe update the state or fetch the updated data
       console.log('Song deleted successfully!');
     } catch (error) {
