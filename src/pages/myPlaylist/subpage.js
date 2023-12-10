@@ -44,7 +44,7 @@ export default function Subpage(props)
 return (
     <>
     <div className='recomm_table'>
-    <h2>{props.title}</h2>
+   
       <table>
         <thead>
           <tr>

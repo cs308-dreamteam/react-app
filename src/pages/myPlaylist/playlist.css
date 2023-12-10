@@ -61,3 +61,33 @@
     background-color: #2980b9; /* Belize Hole */
   }
   
+
+  /* Assuming .myplaylist-container is the parent container for the buttons */
+
+.myplaylist-container .nav-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px; /* Adjust margin as needed */
+    
+  }
+  
+  .myplaylist-container button {
+    font-size: 30px;
+    background-color: #3498db; /* Dodger Blue */
+    color: white;
+    border: none;
+    padding: 10px 20px; /* Adjust padding as needed */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .myplaylist-container button:hover {
+    background-color: #2077b0; /* Slightly Darker Dodger Blue on hover */
+  }
+  
+  
+  .myplaylist-container button.active {
+    background-color: #e0c5a1; /* Darker Dodger Blue */
+    color:e78a0f;
+  }
+  
+ 

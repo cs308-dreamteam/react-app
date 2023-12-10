@@ -52,19 +52,19 @@ export default function MyPlaylist() {
           onClick={() => handleSubpageChange("subpage1")}
           className={selectedSubpage === "subpage1" ? "active" : ""}
         >
-          Subpage 1
+          Friend Recommendations
         </button>
         <button
           onClick={() => handleSubpageChange("subpage2")}
           className={selectedSubpage === "subpage2" ? "active" : ""}
         >
-          Subpage 2
+          Our Recommendations
         </button>
         <button
           onClick={() => handleSubpageChange("subpage3")}
           className={selectedSubpage === "subpage3" ? "active" : ""}
         >
-          Subpage 3
+          Spotify Recommendations
         </button>
       </div>
 
