@@ -1,10 +1,44 @@
-import React, { useState } from "react";
-import "./myPlaylist.css";
-import Subpage1 from "./subpage1"; 
-import Subpage2 from "./subpage2";
-import Subpage3 from "./subpage3"; 
+import React, { useState, useEffect } from "react";
+import "./playlist.css";
+import Subpage from "./subpage"; 
+
+
 
 export default function MyPlaylist() {
+  const [recommendations, setRecommendations] = useState({
+    friendRecommendations: [],
+    ourRecom: [],
+    spotifyRecom: []
+  });
+
+  useEffect(() => {
+    const getRecommendations = async () => {
+      try {
+        const token = localStorage.getItem('token'); // Replace with your actual token retrieval logic
+        const response = await fetch('http://localhost:3000/getRecommendations', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': token
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setRecommendations(data);
+      } catch (error) {
+        console.error('Error fetching recommendations:', error);
+        // Handle error appropriately, e.g., show an error message to the user
+      }
+    };
+
+    getRecommendations();
+  }, []); // The empty dependency array ensures that this effect runs only once when the component mounts
+
+
   const [selectedSubpage, setSelectedSubpage] = useState("subpage1");
 
   const handleSubpageChange = (subpage) => {
@@ -35,9 +69,9 @@ export default function MyPlaylist() {
       </div>
 
       <div className="subpage-content">
-        {selectedSubpage === "subpage1" && <Subpage1 />}
-        {selectedSubpage === "subpage2" && <Subpage2 />}
-        {selectedSubpage === "subpage3" && <Subpage3 />}
+        {selectedSubpage === "subpage1" && <Subpage title = "Friend Recommendations" data = {recommendations.friendRecommendations}/>}
+        {selectedSubpage === "subpage2" && <Subpage title = "Our Recommendations" data = {recommendations.ourRecom}/>}
+        {selectedSubpage === "subpage3" && <Subpage title = "Spotify Recommendations" data = {recommendations.spotifyRecom}/>}
       </div>
     </div>
   );

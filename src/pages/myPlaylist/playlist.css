@@ -1,0 +1,63 @@
+/* library.css */
+
+.recomm_table {
+    min-width: 85vw;
+    padding: 2.5% 2%;
+    overflow-y: auto;
+    max-height: 80vh; /* Adjust the max height as needed */
+  }
+  
+  .recomm_table h2 {
+    color: #3498db; /* Dodger Blue */
+  }
+  
+  .recomm_table table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .recomm_table th,
+  .recomm_table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #85c1e9; /* Sky Blue */
+  }
+  
+  .recomm_table th {
+    background-color: #aed6f1; /* Light Blue */
+    font-weight: bold;
+    color: #1f618d; /* Dark Blue */
+  }
+  
+  .recomm_table tr {
+    background-color: #d6eaf8; /* Lighter Blue */
+    transition: background-color 0.3s ease;
+  }
+  
+  .recomm_table tr:hover {
+    background-color: #a9cce3; /* Lighter Dark Blue */
+  }
+  
+  .recomm_table tr:nth-child(even) {
+    background-color: #aed6f1; /* Light Blue */
+  }
+  
+  .recomm_table tr:nth-child(even):hover {
+    background-color: #a9cce3; /* Lighter Dark Blue */
+  }
+  
+  .recomm_table button {
+    background-color: #3498db; /* Dodger Blue */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .recomm_table button:hover {
+    background-color: #2980b9; /* Belize Hole */
+  }
+  
