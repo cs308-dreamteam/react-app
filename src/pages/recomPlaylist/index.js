@@ -32,6 +32,45 @@ const SongListHistogram = () => {
     fetchData();
   }, []);
 
+  const [avgs, setAvgs] = useState([0,0,0,0])
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/analysis_data', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': localStorage.getItem('token'),
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log(data.result[0]);
+        setAvgs([data.result[0].danceability, data.result[0].energy,data.result[0].valence,data.result[0].popularity]);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  const paragraph = () =>{
+    let result = "You listen songs that are ";
+    result += (avgs[0] > 0.5) ? "easy to dance, " : "not proper to be danced to, ";
+    result += (avgs[1] > 0.5) ? "upbeat, " : "slower-paced, ";
+    result += (avgs[2] > 0.5) ? "happy, " : "melancholic, ";
+    result += (avgs[3] > 0.5) ? "and popular. " : "and not popular. ";
+    console.log(result);
+    return <div>{result}</div>
+  }
+
+  
+
+
   useEffect(() => {
     if (chart) {
       chart.destroy();
@@ -78,6 +117,7 @@ const SongListHistogram = () => {
     };
   };
 
+
   const histogramOptions = {
     scales: {
       x: {
@@ -106,7 +146,9 @@ const SongListHistogram = () => {
       <div>
         <canvas id="songListChart"></canvas>
       </div>
+      {paragraph()}
     </div>
+    
   );
 };
 
