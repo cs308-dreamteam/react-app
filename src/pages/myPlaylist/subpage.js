@@ -1,4 +1,5 @@
 import "./playlist.css";
+import React from 'react';
 
 const combineSongs = (songList) => {
     const combinedSongs = {};
@@ -40,7 +41,7 @@ export default function Subpage(props)
 {
     const recommendations =  (props.title === "Our Recommendations") ?  props.data.attributes : props.data;
     console.log(recommendations);
-    if (!recommendations) return (<div>loading...</div>)
+    if (!recommendations || !Array.isArray(recommendations)) return (<div>loading...</div>)
 
     
     const combinedSongs = combineSongs(recommendations);
