@@ -1,5 +1,13 @@
 # Description for the React.js App
 
+This React.js API provides various functionalities for a music application. Below you can find the setup guidelines and the use case specification table.
+
+
+## Setup and Usage
+
+- Clone the repository.
+- Install dependencies with `npm install`, and start the server with `npm start`.
+
 ## Use Case Specification Table
 
 |   User   |  System  |
