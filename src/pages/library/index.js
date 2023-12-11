@@ -143,7 +143,10 @@ const SongTable = () => {
   };
 
   const handleReRate = async (song) => {
-    const newRating = window.prompt(('Enter a new rating for ' +song.song+ ':'), song.rating);
+    let newRating = window.prompt(('Enter a new rating for ' +song.song+ ':'), song.rating);
+    while (newRating > 5){
+      newRating = window.prompt(('Again, enter a new rating for ' +song.song+ ':'), song.rating);
+    }
     try {
       const response = await fetch('http://localhost:3000/changeRating', {
         method: 'POST',
