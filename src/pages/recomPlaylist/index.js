@@ -58,15 +58,22 @@ const SongListHistogram = () => {
 
     fetchData();
   }, []);
-  const paragraph = () =>{
-    let result = "You listen songs that are ";
-    result += (avgs[0] > 0.5) ? "easy to dance, " : "not proper to be danced to, ";
-    result += (avgs[1] > 0.5) ? "upbeat, " : "slower-paced, ";
-    result += (avgs[2] > 0.5) ? "happy, " : "melancholic, ";
-    result += (avgs[3] > 0.5) ? "and popular. " : "and not popular. ";
+  const paragraph = () => {
+    let result = "You listen to songs that are ";
+    result += "characterized by their unique qualities. Specifically, ";
+    result += (avgs[0] > 0.5) ? "<b><i>they are easy to dance to</i></b>, " : "<b><i>they are not quite suited for dancing</i></b>, ";
+    result += "which shows a distinct rhythm pattern. Furthermore, the tempo of your songs is ";
+    result += (avgs[1] > 0.5) ? "<b><i>upbeat</i></b>, " : "<b><i>slower-paced</i></b>, ";
+    result += "reflecting your preference for either a lively or a relaxed listening experience. In terms of mood, ";
+    result += (avgs[2] > 0.5) ? "<b><i>they tend to be happy</i></b>, " : "<b><i>they lean towards being more melancholic</i></b>, ";
+    result += "which resonates with the emotional tone you prefer in your music. Finally, regarding popularity, ";
+    result += (avgs[3] > 0.5) ? "<b><i>your choices are often mainstream and popular.</i></b> " : "<b><i>you seem to favor more niche and less known tracks.</i></b> ";
+    result += "This blend of qualities defines your unique taste in music.";
     console.log(result);
-    return <div>{result}</div>
-  }
+    return <div dangerouslySetInnerHTML={{ __html: result }} style={{ paddingBottom: '20px', paddingLeft: '12px', paddingRight: '12px' }} />;
+}
+
+
 
   
 
