@@ -51,8 +51,8 @@ const SongListHistogram = () => {
     const dataMap = new Map();
 
     songs.forEach((song) => {
-      const key = selectedType === 'genre' ? song.genre :
-                  selectedType === 'artist' ? song.artist : song.album;
+      const key = selectedType === 'genre' ? song.genre.toLowerCase() :
+                  selectedType === 'artist' ? song.artist.toLowerCase() : song.album.toLowerCase();
   
       const songSet = dataMap.get(key) || new Set();
       songSet.add(song.song); // Assuming "title" is the property containing the song name

@@ -50,6 +50,9 @@ const combineSongs = (songList) => {
   return resultArray;
 };
 
+
+
+
 const SongTable = () => {
   const [songs, setSongs] = useState([]);
 
@@ -86,7 +89,33 @@ const SongTable = () => {
     };
   
     fetchData();
+    const intervalId = setInterval(fetchData, 1000);
+
+    // Cleanup the interval when the component is unmounted
+    return () => clearInterval(intervalId);
   }, []);
+
+  const downloadJson = () => {
+    const jsonString = JSON.stringify(combineSongs(songs), null, 2);
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+  
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'combinedSongs.json';
+  
+    // Append the anchor to the body
+    document.body.appendChild(a);
+  
+    // Trigger a click on the anchor
+    a.click();
+  
+    // Remove the anchor from the body
+    document.body.removeChild(a);
+  
+    // Release the object URL
+    URL.revokeObjectURL(url);
+  };
 
   const handleDeleteClick = async (title) => {
     try {
@@ -113,6 +142,33 @@ const SongTable = () => {
     }
   };
 
+  const handleReRate = async (song) => {
+    const newRating = window.prompt(('Enter a new rating for ' +song.song+ ':'), song.rating);
+    try {
+      const response = await fetch('http://localhost:3000/changeRating', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': localStorage.getItem('token'),
+        },
+        body: JSON.stringify({"song_name": song.song, "new_rating": newRating})
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+    } catch (error) {
+      console.error('Error fetching data:', error);
+
+      localStorage.setItem('token', '');
+      window.location.reload();
+
+    }
+
+
+  }
+
   return (
     <div className='song_table'>
       <h2>My Library</h2>
@@ -134,7 +190,7 @@ const SongTable = () => {
               <td>{song.artist}</td>
               <td>{song.album}</td>
               <td>{song.genre}</td>
-              <td>{song.rating}</td>
+              <td> <button onClick={() => handleReRate(song)} >{song.rating}</button></td>
               <td>
                 <button onClick={() => handleDeleteClick(song.song)}>DELETE</button>
               </td>
@@ -142,6 +198,7 @@ const SongTable = () => {
           ))}
         </tbody>
       </table>
+      <button onClick={downloadJson}>DOWNLOAD</button>
     </div>
   );
 };

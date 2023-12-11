@@ -2,12 +2,13 @@
 
 .song_table {
   width: 100%;
-  padding: 2.5% 2%; /* Adjusted padding for responsiveness */
-  overflow-x: auto; /* Enable horizontal scrolling on smaller screens */
+  padding: 2.5% 2%;
+  overflow-x: auto;
+  background-color: rgba(221, 189, 168, 0.7) ;
 }
 
 h2 {
-  color: #d35400; /* Light Orange */
+  color: rgba(211, 84, 0, 0.7); /* Light Orange with 70% transparency */
 }
 
 table {
@@ -20,35 +21,35 @@ table {
 th, td {
   padding: 12px;
   text-align: left;
-  border-bottom: 1px solid #d2b48c; /* Light Brown */
+  border-bottom: 1px solid rgba(210, 180, 140, 0.7); /* Light Brown with 70% transparency */
 }
 
 th {
-  background-color: #f5cba7; /* Light Orange */
+  background-color: rgba(245, 203, 167, 0.7); /* Light Orange with 70% transparency */
   font-weight: bold;
-  color: #4d3319; /* Dark Brown */
+  color: rgba(77, 51, 25, 0.7); /* Dark Brown with 70% transparency */
 }
 
 tr {
-  background-color: #f9e8d9; /* Lighter Orange */
+  background-color: rgba(249, 232, 217, 0.7); /* Lighter Orange with 70% transparency */
   transition: background-color 0.3s ease;
 }
 
 tr:hover {
-  background-color: #ffe4b5; /* Lighter Brown */
+  background-color: rgba(255, 228, 181, 0.7); /* Lighter Brown with 70% transparency */
 }
 
 tr:nth-child(even) {
-  background-color: #f5e0cc; /* Lighter Brown */
+  background-color: rgba(245, 224, 204, 0.7); /* Lighter Brown with 70% transparency */
 }
 
 tr:nth-child(even):hover {
-  background-color: #ffebcd; /* Lightest Brown */
+  background-color: rgba(255, 235, 205, 0.7); /* Lightest Brown with 70% transparency */
 }
 
 button {
-  background-color: #e74c3c; /* Alizarin */
-  color: white;
+  background-color: rgba(231, 76, 60, 0.7); /* Alizarin with 70% transparency */
+  color: rgba(255, 255, 255, 0.9); /* White with 90% transparency */
   border: none;
   padding: 8px 12px;
   cursor: pointer;
@@ -56,5 +57,5 @@ button {
 }
 
 button:hover {
-  background-color: #c0392b; /* Pomegranate */
+  background-color: rgba(192, 57, 43, 0.7); /* Pomegranate with 70% transparency */
 }

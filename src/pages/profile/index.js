@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./profile.css";
-import CircularJSON from 'circular-json';
 
 const CameraComponent = ({ onClose }) => {
   const [imageSrc, setImageSrc] = useState(null);
@@ -158,7 +157,7 @@ const ListParser = (props) => {
   
     return (
     <div className="taste-details">
-          <h2>Top 5 Songs</h2>
+          <h2>Top Rated Songs</h2>
           <ul>
             {highestRatedSongs.map((song, index) => (
               <li key={index}>

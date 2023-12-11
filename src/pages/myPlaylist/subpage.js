@@ -34,12 +34,39 @@ const combineSongs = (songList) => {
     return resultArray;
   };
 
+
+
 export default function Subpage(props)
 {
     const recommendations =  (props.title === "Our Recommendations") ?  props.data.attributes : props.data;
     console.log(recommendations);
     if (!recommendations) return (<div>loading...</div>)
-        
+
+    
+    const combinedSongs = combineSongs(recommendations);
+
+    const downloadJson = () => {
+      const jsonString = JSON.stringify(combinedSongs, null, 2);
+      const blob = new Blob([jsonString], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+  
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'combinedSongs.json';
+  
+      // Append the anchor to the body
+      document.body.appendChild(a);
+  
+      // Trigger a click on the anchor
+      a.click();
+  
+      // Remove the anchor from the body
+      document.body.removeChild(a);
+  
+      // Release the object URL
+      URL.revokeObjectURL(url);
+    };
+  
 
 return (
     <>
@@ -65,6 +92,7 @@ return (
           ))}
         </tbody>
       </table>
+      <button onClick={downloadJson}>DOWNLOAD</button>
     </div>
     </>
 );
