@@ -1,70 +1,17 @@
-# Getting Started with Create React App
+# Description for the React.js App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Use Case Specification Table
 
-## Available Scripts
+|   User   |  System  |
+|----------|----------|
+| 1-) The user creates a new account by<br>entering his/her email, username and password.  |   |
+| 3-) User enters the verification code. | 2-) System sends a verification mail including a<br>verification code to the user's email. |
+| 4-) User logins by entering the username and password.   | 5-) System assigns a unique auth token to the user. |
+| 6-) User adds a song manually by entering the<br>song informations or uploading a json file.   | 7-) System creates a relation between the user and the songs.     |
+| 8-) User views the songs added from his/her <br>library, and can delete or rate/rerate them.   | 9-) User's song data is displayed and changed<br>if delete or rerate happens.|
+| 10-) User observes the analysis of his/her taste<br>concerning the genres, artists and audio features.| 11-) Different histograms and charts are<br>created for different features. |
+| 12-) User selects a recommendation type to get, and<br>may extract the recommended songs' information. | 13-) System uses its database or spotify api<br>to gather and display the various recommendations,<br> which also include friend suggestions. |
+| 14-) User view and edit his/her profile info, which<br>include his/her follower count, top songs, artists and genres. | 15-) System displays the user's top rated<br>song information and user's followers. |
+| 16-) User changes his/her avatar by uploading a photo. | 17-) System uses user's device's camera to take a<br>picture, and stores the image file in its local. |
+| 18-) User selects a user to follow and may see the<br>music taste of the selected followed user. | 19-) System gets and displays the followed<br>user's top rated songs' features. |
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
