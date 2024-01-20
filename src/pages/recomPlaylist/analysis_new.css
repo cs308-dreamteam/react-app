@@ -1,0 +1,26 @@
+.analysis-table
+{
+    width: 84%;
+}
+
+.paragraph-container {
+    font-size: 0.9em; /* Smaller font size */
+    line-height: 1.2em; /* Tighter line spacing */
+    max-height: 100px; /* Set a maximum height */
+    overflow: auto; /* Allows scrolling if content overflows */
+}
+  
+
+canvas
+{
+    width: 100%;
+    padding: 5%;
+    /*background-color: orange;*/
+}
+
+svg {
+    width: 100%; /* Full width to expand as much as the parent container */
+    height: 600px; /* Fixed height, or use 'auto' for responsive height based on width */
+    margin: auto; /* Center the SVG if necessary */
+}
+
