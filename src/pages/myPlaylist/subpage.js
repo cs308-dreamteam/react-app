@@ -67,6 +67,43 @@ export default function Subpage(props)
       // Release the object URL
       URL.revokeObjectURL(url);
     };
+
+    const addSongToLibrary = async (song) => {
+        // Prompt the user for a rating
+      const userRating = window.prompt("Please enter your rating for this song (1-5):", "5");
+      if (!userRating) return;  // User cancelled the prompt
+      const songData = {
+        songList: [{
+          title: song.song,
+          albums: song.album.split(', '),
+          artists: song.artist.split(', '),
+          genres: song.genre.split(', '),
+          rating: parseInt(userRating)
+        }]
+      };
+    
+      try {
+        const response = await fetch('http://localhost:3000/add_song', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': localStorage.getItem('token'),
+          },
+          body: JSON.stringify(songData),
+        });
+    
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error('Server responded with an error:', errorData);
+          throw new Error('Network response was not ok');
+        }
+    
+        console.log('Song added to library successfully');
+      } catch (error) {
+        console.error('Error adding song to library:', error.message);
+      }
+    };
+    
   
 
 return (
@@ -89,6 +126,9 @@ return (
               <td>{song.artist}</td>
               <td>{song.album}</td>
               <td>{song.genre}</td>
+              <td>
+                <button onClick={() => addSongToLibrary(song)}>Add to Library</button>
+              </td>
             </tr>
           ))}
         </tbody>
