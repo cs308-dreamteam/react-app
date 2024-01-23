@@ -15,8 +15,13 @@
   margin-top: 20px;
   margin-left: 3px;
 }
+
 .pp
 {
-  width: 90%;
-  margin: 5%;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 20px;
+    margin-top: 20px;
+    margin-left: 3px;
 }

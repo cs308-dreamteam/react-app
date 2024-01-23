@@ -48,16 +48,16 @@ export default function Sidebar() {
       
         <SidebarButton title="Add Song" to="/add" icon={<CgAdd />} />
         <SidebarButton
-          title="analysis"
+          title="Analysis"
           to="/recomPlaylist"
           icon={<SiGoogleanalytics />}
         />
         <SidebarButton
-          title="MyPlaylist"
+          title="My Songs"
           to="/myPlaylist"
           icon={<MdFavorite />}
         />
-        <SidebarButton title="Libray" to="/" icon={<IoLibrary />} />
+        <SidebarButton title="Library" to="/" icon={<IoLibrary />} />
       </div>
       <SidebarButton title="Sign Out" to=""  icon={<FaSignOutAlt />} />
     </div>

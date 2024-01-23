@@ -1,81 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./profile.css";
 
-const CameraComponent = ({ onClose }) => {
-  const [imageSrc, setImageSrc] = useState(null);
-  const videoRef = useRef(null);
-  const streamRef = useRef(null);
-
-  const startCamera = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      videoRef.current.srcObject = stream;
-      streamRef.current = stream;
-    } catch (error) {
-      console.error('Error accessing camera:', error);
-    }
-  };
-
-  const stopCamera = () => {
-    if (streamRef.current) {
-      const tracks = streamRef.current.getTracks();
-      tracks.forEach((track) => track.stop());
-      videoRef.current.srcObject = null;
-      streamRef.current = null;
-    }
-
-    onClose(); // Close the camera pop-up
-  };
-
-  const takePicture = () => {
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
-    const video = videoRef.current;
-
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-    const dataUrl = canvas.toDataURL('image/jpeg');
-    setImageSrc(dataUrl);
-
-    // Call the function to send the image to the backend
-    sendImageToBackend(dataUrl);
-  };
-
-  const sendImageToBackend = async (dataUrl) => {
-    try {
-      const response = await fetch('http://localhost:3000/upload_image', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-access-token': localStorage.getItem('token'),
-        },
-        body: JSON.stringify({ image: dataUrl }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      console.log('Image uploaded successfully');
-    } catch (error) {
-      console.error('Error uploading image:', error);
-    }
-  };
-
-  return (
-    <div className="camera-popup">
-      <h2>Camera Component</h2>
-      <button onClick={startCamera}>Start Camera</button>
-      <button onClick={takePicture}>Take Picture</button>
-      <button onClick={stopCamera}>Stop Camera</button>
-      {imageSrc && <img src={imageSrc} alt="Captured" />}
-      <video ref={videoRef} style={{ display: 'block', margin: '10px 0' }} autoPlay />
-    </div>
-  );
-};
-
 const ListParser = (props) => {
   let songs = props.input;
   if (!songs || songs.length === 0) {
@@ -156,26 +81,40 @@ const ListParser = (props) => {
     const mostOccurringGenre = Object.keys(genreCount).reduce((a, b) => genreCount[a] > genreCount[b] ? a : b);
   
     return (
-    <div className="taste-details">
-          <h2>Top Rated Songs</h2>
-          <ul>
-            {highestRatedSongs.map((song, index) => (
-              <li key={index}>
-                <strong>Title:</strong> {song.song}, 
-                <strong> Artists:</strong> {song.artist.join(', ')}, 
-                <strong> Albums:</strong> {song.album.join(', ')}, 
-                <strong> Genres:</strong> {song.genre.join(', ')}, 
-                <strong> Rating:</strong> {song.rating}
-              </li>
-            ))}
-          </ul>
-      
-          <h2>Most Favorites</h2>
-          <p>Most Favorite Song: <strong>{mostOccurringTitle}</strong></p>
-          <p>Most Favorite Artist: <strong>{mostOccurringArtist}</strong></p>
-          <p>Most Favorite Album: <strong>{mostOccurringAlbum}</strong></p>
-          <p>Most Favorite Genre: <strong>{mostOccurringGenre}</strong></p>
-        </div>
+        <>
+          <div className="topRatedSongContainer a-center col">
+            <h2>Top Rated Songs</h2>
+            <div className="row j-center topRatedContainer">
+              {highestRatedSongs.map((song) => (
+                  <div className="topRatedEntry">
+                    <strong>{song.song}</strong>,<br></br>
+                    by <strong>{song.artist.join(', ')}</strong>,<br></br>
+                    in <strong>{song.album.join(', ')}</strong>,<br></br>
+                    <span className="textOverflow">Genres: <strong>{song.genre.join(', ')}</strong>,</span>
+                    Rating: <strong>{song.rating}</strong>
+                  </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="favouritesContainer a-center col">
+            <h2>Favorites</h2>
+            <div className="favouriteInformationContainer row">
+              <div className="favouriteInformationEntry col a-center">
+                <span>Song</span><span className="favouriteInformation"><strong>{mostOccurringTitle}</strong></span>
+              </div>
+              <div className="favouriteInformationEntry col a-center">
+                <span>Genre</span><span className="favouriteInformation"><strong>{mostOccurringGenre}</strong></span>
+              </div>
+              <div className="favouriteInformationEntry col a-center">
+                <span>Artist</span><span className="favouriteInformation"><strong>{mostOccurringArtist}</strong></span>
+              </div>
+              <div className="favouriteInformationEntry col a-center">
+                <span>Album</span><span className="favouriteInformation"><strong>{mostOccurringAlbum}</strong></span>
+              </div>
+            </div>
+          </div>
+        </>
       );
 }
 
@@ -358,12 +297,13 @@ const Network = () => {
   }, []);
 
   const [inputValue2, setInputValue2] = useState('');
+  const [inputValue3, setInputValue3] = useState('');
 
   const handleInputChange2 = (e) => {
     setInputValue2(e.target.value);
   };
+
   const [followed_top5, setFollowed_top5] = useState([]);
-  let slack = '';
   const getUserInfo = async  () => {
     try {
       
@@ -383,50 +323,53 @@ const Network = () => {
       const array = data.songs.map(song => song.songTitle);
       console.log(array);
       setFollowed_top5(array);
+      setInputValue3(inputValue2);
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
   }
 
-
-
-
   return (
-    <div>
-      <p>Follower count: {count}</p>
-      <label htmlFor="autocomplete">Choose a user to follow:</label> <br/>
-      <input
-        type="text"
-        id="autocomplete"
-        list="options"
-        onChange={handleInputChange}
-      />
-      <datalist id="options">
-        {userData.map((option, index) => (
-          <option key={index} value={option} />
-        ))}
-      </datalist>
-      <button onClick={handleClick}>follow</button>
-      <br/><br/>
+    <>
+      <span className="networkingTitle">Networking</span>
+      <span className="networkingFollowerCount">Follower count: {count}</span>
+      <label htmlFor="userFollowInput">Follow a User:</label>
+      <div className="row">
+        <input
+            type="text"
+            id="userFollowInput"
+            list="allUsers"
+            placeholder="Username"
+            onChange={handleInputChange}
+        />
+        <datalist id="allUsers">
+          {userData.map((option, index) => (
+              <option key={index} value={option} />
+          ))}
+        </datalist>
+        <button onClick={handleClick}>Follow</button>
+      </div>
 
-      <label htmlFor="autocomplete2">Users I follow: </label> <br/>
-      <input
-        type="text"
-        id="autocomplete2"
-        list="options2"
-        onChange={handleInputChange2}
-      />
-      <datalist id="options2">
-        {followeds.map((option, index) => (
-          <option key={index} value={option} />
-        ))}
-      </datalist>
-      <button onClick={getUserInfo}> Get info </button>
-
+      <label htmlFor="userGatherInput">Users I follow: </label>
+      <div className="row">
+        <input
+            type="text"
+            id="userGatherInput"
+            list="followedUsers"
+            placeholder="Username"
+            onChange={handleInputChange2}
+        />
+        <datalist id="followedUsers">
+          {followeds.map((option, index) => (
+              <option key={index} value={option} />
+          ))}
+        </datalist>
+        <button onClick={getUserInfo}>Get Info</button>
+      </div>
       <div>
       {followed_top5.length > 0 ? (
         <div>
-          <h2>{inputValue2} Top 5:</h2>
+          <h2>{inputValue3} Top 5:</h2>
           <ul>
             {followed_top5.map((song, index) => (
               <li key={index}>{song}</li>
@@ -437,11 +380,141 @@ const Network = () => {
         <p></p>
       )}
     </div>
-
-
-    </div>
+    </>
   )
 }
+
+
+const ProfileImage = () => {
+  const [isCameraOpen, setIsCameraOpen] = useState(false);
+  const [avatarBase64, setAvatarBase64] = useState("");
+
+  const openCamera = () => {
+    setIsCameraOpen(true);
+    startCamera();
+  };
+
+  const closeCamera = () => {
+    setIsCameraOpen(false);
+  };
+
+  const stopCamera = () => {
+    if (streamRef.current) {
+      const tracks = streamRef.current.getTracks();
+      tracks.forEach((track) => track.stop());
+      videoRef.current.srcObject = null;
+      streamRef.current = null;
+    }
+
+    closeCamera();
+  };
+
+  const sendImageToBackend = async (dataUrl) => {
+    try {
+      const response = await fetch('http://localhost:3000/upload_image', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': localStorage.getItem('token'),
+        },
+        body: JSON.stringify({ image: dataUrl }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      console.log('Image uploaded successfully');
+    } catch (error) {
+      console.error('Error uploading image:', error);
+    }
+  };
+
+  const takePicture = () => {
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    const video = videoRef.current;
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    const dataUrl = canvas.toDataURL('image/jpeg');
+    setImageSrc(dataUrl);
+
+    // Call the function to send the image to the backend
+    sendImageToBackend(dataUrl);
+    closeCamera();
+  };
+
+  const [imageSrc, setImageSrc] = useState(null);
+  const videoRef = useRef(null);
+  const streamRef = useRef(null);
+
+  const startCamera = async () => {
+    try {
+      console.log(navigator);
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      videoRef.current.srcObject = stream;
+      streamRef.current = stream;
+    } catch (error) {
+      console.error('Error accessing camera:', error);
+    }
+  };
+
+  useEffect(
+      () => {
+        fetchData().then( (userData) => {
+              setAvatarBase64(
+                  userData.avatarBase64
+              );
+            }
+        );
+      }
+  );
+
+  const handleClick = () => {
+    if(isCameraOpen) {
+      takePicture();
+      closeCamera();
+    } else {
+      openCamera();
+    }
+  }
+
+  return (
+      isCameraOpen ?
+          <video ref={videoRef} autoPlay onClick={handleClick} className="profileImage"/>:
+          <img alt="User Profile" src={"data:image/png;base64," + avatarBase64} className="profileImage" onClick={handleClick}/>
+  );
+
+}
+
+const fetchData = async () => {
+  try {
+    const response = await fetch("http://localhost:3000/get_user", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        'x-access-token': localStorage.getItem('token'),
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    return await response.json();
+
+    // Update state with user data
+
+    //console.log(userInfo);
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    localStorage.setItem('token', '');
+    window.location.reload();
+  }
+};
 
 
 const Profile = () => {
@@ -451,72 +524,66 @@ const Profile = () => {
     avatarPath: "",
   });
 
-
-
-
-  const [isCameraOpen, setIsCameraOpen] = useState(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/get_user", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            'x-access-token': localStorage.getItem('token'),
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const userData = await response.json();
-
-        // Update state with user data
-        setUserInfo({
-          username: userData.username,
-          mail: userData.mail,
-          avatarPath: userData.avatarPath,
-          avatarBase64: userData.avatarBase64,
-        });
-        //console.log(userInfo);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-        localStorage.setItem('token', '');
-        window.location.reload();
+  useEffect( () => {
+    fetchData().then( (userData) => {
+          setUserInfo({
+            username: userData.username,
+            mail: userData.mail,
+            avatarPath: userData.avatarPath,
+            avatarBase64: userData.avatarBase64,
+          });
       }
-    };
-
-    fetchData();
-    const intervalId = setInterval(fetchData, 1000);
-    return () => clearInterval(intervalId);
-  }, []);
-
-  const openCamera = () => {
-    setIsCameraOpen(true);
-  };
-
-  const closeCamera = () => {
-    setIsCameraOpen(false);
-  };
+    );
+  });
 
   return (
-    <>
-      <div className="user-info">
-        <h2>User Profile</h2>
-        <p>Username: {userInfo.username}</p>
-        <p>Email: {userInfo.mail}</p>
-        <p>Profile Photo: </p>
-        <img className="profile-page-photo" src={`data:image/jpeg;base64, ${userInfo.avatarBase64}`} alt="User Avatar" />
-        <br/> 
-        <button onClick={openCamera}>Change Your Profile Photo</button>
-        <Network/>
+      <div className="top col">
+        <div className="profileHeader row j-center">
+          <div className="profileBackdrop"></div>
+          <div className="profileInformationContainer col absolute">
+            <div className="profileUsername">
+              {userInfo.username}
+            </div>
+            <div className="profileImageContainer a-center overflow-hidden">
+              <ProfileImage/>
+            </div>
+          </div>
+        </div>
+        <div className="profileHero row">
+          <div className="networkContainer col a-center">
+            <Network/>
+          </div>
+          <div className="songListContainer col a-center">
+            <SongList/>
+          </div>
+        </div>
       </div>
-      <SongList/>
-      {isCameraOpen && <CameraComponent onClose={closeCamera} />}
-    </>
-  );
+
+      /*
+      <div className="row j-center w-100">
+        <div className="topLevel">
+          <div className="informationContainer">
+            <div className="generalInformationContainer">
+              <span className="usernameSpan">Dospacite</span>
+              <div className="userProfilePictureContainer">
+                {
+                  isCameraOpen ?
+                      <video ref={videoRef} style={{ width: 256 }} autoPlay /> :
+                      <img onClick={openCamera} src={`data:image/jpeg;base64, ${userInfo.avatarBase64}`} alt="" className="userProfilePicture"></img>
+                }
+                {isCameraOpen && <button className="takePictureButton" onClick={takePicture}>Take Picture</button>}
+              </div>
+              <span className="emailSpan">{userInfo.mail}</span>
+            </div>
+            <div className="row">
+              <Network/>
+              <SongList/>
+            </div>
+          </div>
+        </div>
+      </div>
+       */
+  )
 };
 
 export default Profile;

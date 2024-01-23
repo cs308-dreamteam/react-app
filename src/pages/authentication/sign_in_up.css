@@ -1,6 +1,6 @@
 body
 {
-  margin: 0px;
+  margin: 0;
   font-family: 'Poppins', sans-serif;
 }
 
@@ -30,46 +30,23 @@ body
 {
   height: 93vh;
   background-color: rgb(197, 150, 112);
-  background-image: linear-gradient(rgba(197, 141, 78, 0.8) 0%, rgba(94, 68, 212, 0.8) 100%);
-}
-
-.mini-body
-{
-  display: flex;
-  flex-direction: row;
-}
-
-.sider
-{
-  flex: 1;
 }
 
 .login-container
 {
-  flex: 2;
   display: grid;
   align-items: center;
   justify-items: center;
-   grid-gap: 0px;
 }
 
 .login-form
 {
-  margin: 0px;
-  max-width: 500px;
-  min-width: max(300px, 35vw);
+  min-width: clamp(300px, 35vw, 600px);
   background-color: #ED6C44;
-  /*background-image: linear-gradient(rgba(94, 68, 212, 0.8) 0%, rgba(197, 141, 78, 0.8) 100%);*/
-  /*width: 34vw;*/
-  height: 85vh;
-  
-  border-radius: 0.6%;
-  border: 0vh solid black;
-  margin-top: 2vh;
-
+  border-radius: 15px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  padding: 2vh 0 2vh;
 }
 
 .upper-body
@@ -77,40 +54,36 @@ body
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-items: center;
+
+  margin-bottom: 1rem;
 }
 
 .lower-body
 {
-
-}
-
-.title
-{
-  color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: auto;
 }
 
-.title>div, .title>h3
-{
-  margin: 0px;
-  padding: 0px;
-  border: 0px;
+.title {
+    font-size: 3.5vh;
+    color: white;
+    font-weight: 500;
+    margin-bottom: 2vh;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
 }
 
-.title>div
-{
-
-  height: 9vh;
-  font-size: 8vh;
+.title>* {
+    margin: 0;
+  font-size: 2.5rem;
 }
 
-.title>h3
-{
-  height: 12vh;
-  font-size: 11vh;
+.title>h3 {
+    font-size: 5rem;
+    font-weight: 700;
 }
 
 form.login
@@ -120,9 +93,9 @@ form.login
   height: 35vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  margin-top: 5vh;
+  gap: 1.5rem;
 }
 
 .form-group

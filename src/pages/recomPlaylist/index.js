@@ -74,6 +74,9 @@ const SongListHistogram = () => {
 }
 
 
+function toTitle(s) {
+    return s.charAt(0).toUpperCase() + s.substring(1)
+}
 
   
 
@@ -105,8 +108,9 @@ const SongListHistogram = () => {
       dataMap.set(key, songSet);
     });
   
-    const labels = [...dataMap.keys()];
-    const data = labels.map((key) => dataMap.get(key).size);
+    let labels = [...dataMap.keys()];
+    labels = labels.map((l) => toTitle(l));
+    const data = labels.map((key) => dataMap.get(key.toLowerCase()).size);
   
     return {
       labels,
@@ -140,7 +144,7 @@ const SongListHistogram = () => {
   };
 
   return (
-    <div className='analysis-table'>
+    <div className='analysis-table col a-center'>
       <h2>Song List Histogram</h2>
       <div>
         <label>Select Type: </label>
@@ -150,9 +154,7 @@ const SongListHistogram = () => {
           <option value="album">Album</option>
         </select>
       </div>
-      <div>
         <canvas id="songListChart"></canvas>
-      </div>
       {paragraph()}
     </div>
     

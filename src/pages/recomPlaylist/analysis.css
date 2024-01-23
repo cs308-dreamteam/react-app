@@ -1,11 +1,11 @@
 .analysis-table
 {
-    width: 100%;
+    width: 90%;
 }
 
 canvas
 {
-    width: 100%;
-    padding: 5%;
+    flex-grow: 1;
+    padding: 2rem;
     /*background-color: orange;*/
 }

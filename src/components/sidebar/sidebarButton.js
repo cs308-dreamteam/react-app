@@ -18,8 +18,6 @@ export default function SidebarButton(props) {
     }
   }
 
-
-
   return (
     <div onClick={handleClick}>
       <Link to={props.to}>

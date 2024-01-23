@@ -89,7 +89,7 @@ function JsonFileDropzone () {
   }
 
   return (
-    <div className="json-upload-container">
+    <>
       <div
         onDrop={handleDrop}
         onDragOver={handleDragOver}
@@ -102,9 +102,7 @@ function JsonFileDropzone () {
         )}
       </div>
       <button onClick={handleClick}>Upload</button>
-
-      <GoogleDrivePicker />
-    </div>
+    </>
 
   );
 };
@@ -202,24 +200,22 @@ const Form = () => {
     }
   };
   return (
-    <div className="manual-upload-container">
     <form onSubmit={handleSubmit} className="manual-upload">
       {elements.map((element) => (
         <div key={element.id} className={element.type}>
-          <label htmlFor={element.type}>{element.type.substring(2)}</label> <br/>
+          <label htmlFor={element.type}>{element.type.substring(2)}</label>
           <input type="text" name={element.type} placeholder={element.type.substring(2)} />
           {element.type !== 's_title' && (
-            <button onClick={(e) => handleClick(element.id, e)}>+</button>
+            <button onClick={(e) => handleClick(element.id, e)} className="add-button">+</button>
           )}
         </div>
       ))}
       <div>
-        <label htmlFor="s_rating">rating</label> <br/>
+        <label htmlFor="s_rating">rating</label>
         <input type="text" name="s_rating" placeholder="rating" />
       </div>
       <input type="submit" value="Add" />
     </form>
-    </div>
   );
 };
 
@@ -229,9 +225,18 @@ const Form = () => {
 
 export default function Add() {
   return(
-    <div className="add-body">    
-      <Form/>
-      <JsonFileDropzone/>
-    </div>
+      <div className="addContainer">
+        <span className="addTitle">
+          Add Songs
+        </span>
+        <div className="addBody row a-center">
+          <div className="formContainer col a-center"><Form/></div>
+          <span className="optionSeparator text-align-center">or</span>
+          <div className="fileUploadContainer col a-center"><JsonFileDropzone/></div>
+          <span className="optionSeparator text-align-center">or</span>
+          <div className="googleDriveContainer col a-center"><GoogleDrivePicker/></div>
+        </div>
+      </div>
+
   );
 }

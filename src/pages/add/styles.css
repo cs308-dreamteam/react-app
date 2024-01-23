@@ -1,35 +1,58 @@
-.add-body {
+.addBody {
     width: 100%;
-    display: flex;
-    flex-direction: row;
+    justify-content: space-evenly;
   }
-  
-  .manual-upload-container,
-  .json-upload-container {
-    flex: 1;
-    overflow: auto;
-  }
-  
-  .manual-upload-container {
-    padding-top: 5%; 
+
+.addContainer {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
-  }
-  
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.addTitle {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+   color: #ED6C44;
+}
+
+.optionSeparator {
+  flex: 1;
+}
+
+.formContainer {
+  flex: 10;
+}
+
+.fileUploadContainer {
+  flex: 10;
+}
+
+.googleDriveContainer {
+  flex: 10;
+}
+
+.text-align-center {
+    text-align: center;
+}
+
   .manual-upload {
     padding: 20px;
     height: 100%;
-    width: 90%;
     display: flex;
     flex-direction: column;
     overflow: auto;
   }
-  
+
   .manual-upload>div {
     display: flex;
     flex-direction: row; /* Adjusted for better alignment */
-    justify-content: space-between;
+    justify-content: end;
     align-items: center; /* Centered items vertically */
     width: 100%;
     margin-bottom: 10px;
@@ -37,38 +60,36 @@
   
   .manual-upload>div>label {
     margin-right: 10px; /* Added margin for spacing between label and input */
+    text-transform: capitalize;
   }
   
   .manual-upload>div>input {
-    flex: 1; /* Expanded input to take remaining space */
+    flex-grow: 1;
     padding: 10px;
     box-sizing: border-box;
+    text-transform: capitalize;
   }
   
   .manual-upload>div .add-button {
     margin-left: 10px; /* Added margin for spacing between input and button */
     padding: 10px 15px;
+    background-color: #ED6C44;
   }
   
   .json-upload {
-    flex: 1;
-    height: 50%;
+    aspect-ratio: 1;
     border: 2px dashed #ccc;
     border-radius: 8px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    margin: 20px;
+    margin-bottom: 20px;
+    padding: 1rem;
   }
-  
-  .drive-upload {
-    height: 50%;
-  }
-  
+
   .manual-upload-container {
-    max-width: 400px;
-    margin: 0 auto;
+    flex: 1;
   }
   
   .manual-upload {
@@ -92,7 +113,7 @@
   .submit-button,
   .google-drive-button,
   .upload-button {
-    background-color: #4caf50;
+    background-color: #ED6C44;
     color: white;
     border: none;
     border-radius: 4px;
