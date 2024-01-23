@@ -13,11 +13,18 @@ canvas
 
 .chart
 {
-    height: 80%;
-    width: 80%;
+    height: 70%;
+    width: 70%;
 }
 
 .paragraph
 {
-    height: 20%;
+    height: 30%;
+}
+
+.paragraph > b
+{
+
+    color: orange;
+    font-size: 150%;
 }
