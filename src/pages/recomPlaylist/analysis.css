@@ -13,18 +13,39 @@ canvas
 
 .chart
 {
-    height: 70%;
-    width: 70%;
+    height: 60%;
+    width: 60%;
+}
+
+.paragraph-container
+{
+    height: 40%;
+}
+
+.paragraph-container>h1
+{
+    text-align: center;
+    color: rgb(255, 119, 0);
+    height: 30%;
+    margin: 0px;
 }
 
 .paragraph
 {
-    height: 30%;
+    text-align: center;
+    height: 60%;
+    border-radius: 10px;
+    margin-left: 6%;
+    margin-right: 6%;
+    margin-bottom: 6%;
+    background-color: rgb(232, 230, 230);
+    color: rgb(54, 40, 0);
+
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .paragraph > b
 {
-
-    color: orange;
-    font-size: 150%;
+    color: rgb(255, 180, 41);
+    font-size: 130%;
 }

@@ -58,6 +58,8 @@ const SongListHistogram = () => {
 
     fetchData();
   }, []);
+
+  
   const paragraph = () => {
     let result = "You listen to songs that are ";
     result += "characterized by their unique qualities. Specifically, ";
@@ -146,7 +148,7 @@ function toTitle(s) {
   return (
     <div className='analysis-table col a-center'>
       <div className='chart'>
-        <h2>Song List Histogram</h2>
+        <h2 style={{textAlign: "center"}}>Song List Histogram</h2>
 
         <div>
           <label>Select Type: </label>
@@ -159,8 +161,11 @@ function toTitle(s) {
 
         <canvas id="songListChart"></canvas>
       </div>
-
-      {paragraph()}
+      <div className='paragraph-container'>
+        <h1>NLP Generated Analysis</h1>
+        {paragraph()}
+      </div>
+      
     </div>
     
   );
