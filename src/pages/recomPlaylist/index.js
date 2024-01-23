@@ -70,7 +70,7 @@ const SongListHistogram = () => {
     result += (avgs[3] > 0.5) ? "<b><i>your choices are often mainstream and popular.</i></b> " : "<b><i>you seem to favor more niche and less known tracks.</i></b> ";
     result += "This blend of qualities defines your unique taste in music.";
     console.log(result);
-    return <div dangerouslySetInnerHTML={{ __html: result }} style={{ paddingBottom: '20px', paddingLeft: '12px', paddingRight: '12px' }} />;
+    return <div className = "paragraph" dangerouslySetInnerHTML={{ __html: result }} style={{ paddingBottom: '20px', paddingLeft: '12px', paddingRight: '12px' }} />;
 }
 
 
@@ -145,16 +145,21 @@ function toTitle(s) {
 
   return (
     <div className='analysis-table col a-center'>
-      <h2>Song List Histogram</h2>
-      <div>
-        <label>Select Type: </label>
-        <select value={type} onChange={handleTypeChange}>
-          <option value="genre">Genre</option>
-          <option value="artist">Artist</option>
-          <option value="album">Album</option>
-        </select>
-      </div>
+      <div className='chart'>
+        <h2>Song List Histogram</h2>
+
+        <div>
+          <label>Select Type: </label>
+          <select value={type} onChange={handleTypeChange}>
+            <option value="genre">Genre</option>
+            <option value="artist">Artist</option>
+            <option value="album">Album</option>
+          </select>
+        </div>
+
         <canvas id="songListChart"></canvas>
+      </div>
+
       {paragraph()}
     </div>
     

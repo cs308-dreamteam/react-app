@@ -9,3 +9,15 @@ canvas
     padding: 2rem;
     /*background-color: orange;*/
 }
+
+
+.chart
+{
+    height: 80%;
+    width: 80%;
+}
+
+.paragraph
+{
+    height: 20%;
+}
