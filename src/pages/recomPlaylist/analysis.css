@@ -16,6 +16,7 @@ canvas
 {
     height: 60%;
     width: 60%;
+    margin-bottom: 0%;
 }
 .chart>h2
 {
@@ -26,6 +27,7 @@ canvas
 
 .paragraph-container
 {
+    
     height: 40%;
 }
 
@@ -43,6 +45,7 @@ canvas
     text-align: center;
     height: 60%;
     border-radius: 10px;
+    margin-top: 7%;
     margin-left: 6%;
     margin-right: 6%;
     margin-bottom: 6%;
