@@ -16,6 +16,73 @@ function Title(props)
   )
 }
 
+function PasswordChangeForm({ onBack }) {
+  const [formData, setFormData] = useState({ email: '', oldPassword: '', newPassword: '' });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:3000/change_password', null, {
+        params: {
+          mail: formData.email,
+          oldPass: formData.oldPassword,
+          newPass: formData.newPassword
+        }
+      });
+      console.log('Response from server:', response.data);
+      alert(response.data.message);
+      // Optionally, you can call onBack here to go back after a successful change
+      // onBack();
+    } catch (error) {
+      console.error('Error:', error);
+      alert(error.response.data.message);
+    }
+  };
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="password"
+          name="oldPassword"
+          placeholder="Old Password"
+          value={formData.oldPassword}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="password"
+          name="newPassword"
+          placeholder="New Password"
+          value={formData.newPassword}
+          onChange={handleChange}
+          required
+        />
+        <button type="submit">Change Password</button>
+      </form>
+      <button onClick={onBack}>Back to Sign In</button>
+    </div>
+  );
+}
+
+
+
 function Verification(props)
 {
   //const [code, setCode] = useState(0);
@@ -169,9 +236,14 @@ function Form(props)
       <div className='lower-body'>
         
           <Already prompt={already_text} link={already_button} isSignUp={props.isSignUp}/>
-        
-         
+
+
       </div>
+      {!props.isSignUp && (
+          <button onClick={props.onForgotPassword} className="forgot-password-button">
+            Forgot Password?
+          </button>
+        )}
     </div>
     </div>
   )
@@ -242,16 +314,29 @@ function Navbar()
 }
 
 function SignInUp() {
+  const [showPasswordChange, setShowPasswordChange] = useState(false);
+
+  const handleShowPasswordChange = () => setShowPasswordChange(true);
+  const handleHidePasswordChange = () => setShowPasswordChange(false);
+
   return (
     <>
-        <Navbar/>
-        <div className="mini-body">
+      <Navbar/>
+      <div className="mini-body">
         <div className='sider'/>
-        <Form isSignUp={false}/>
+        {showPasswordChange ? (
+          <PasswordChangeForm onBack={handleHidePasswordChange}/>
+        ) : (
+          <Form
+            isSignUp={false}
+            onForgotPassword={handleShowPasswordChange}
+          />
+        )}
         <div className='sider'/>
-        </div>
+      </div>
     </>
-  )
+  );
 }
+
 
 export default SignInUp
