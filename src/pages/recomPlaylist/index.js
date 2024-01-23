@@ -119,11 +119,11 @@ function toTitle(s) {
       datasets: [
         {
           label: `Number of ${selectedType}s`,
-          backgroundColor: 'rgba(75,192,192,0.6)',
-          borderColor: 'rgba(75,192,192,1)',
+          backgroundColor: 'rgba(255, 119, 0, 0.6)', // Adjusted to orangish color
+          borderColor: 'rgba(255, 119, 0, 1)',
           borderWidth: 1,
-          hoverBackgroundColor: 'rgba(75,192,192,0.8)',
-          hoverBorderColor: 'rgba(75,192,192,1)',
+          hoverBackgroundColor: 'rgba(255, 119, 0, 0.8)',
+          hoverBorderColor: 'rgba(255, 119, 0, 1)',
           data,
         },
       ],

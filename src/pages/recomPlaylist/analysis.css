@@ -1,6 +1,7 @@
 .analysis-table
 {
     width: 90%;
+    background-color: rgba(221, 189, 168, 0.7) ;
 }
 
 canvas
@@ -16,6 +17,12 @@ canvas
     height: 60%;
     width: 60%;
 }
+.chart>h2
+{
+    text-align: center;
+    color: rgb(255, 119, 0);
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+}
 
 .paragraph-container
 {
@@ -26,6 +33,7 @@ canvas
 {
     text-align: center;
     color: rgb(255, 119, 0);
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
     height: 30%;
     margin: 0px;
 }
@@ -38,7 +46,7 @@ canvas
     margin-left: 6%;
     margin-right: 6%;
     margin-bottom: 6%;
-    background-color: rgb(232, 230, 230);
+    background-color: rgb(255, 255, 255);
     color: rgb(54, 40, 0);
 
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
