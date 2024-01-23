@@ -8,7 +8,8 @@ export default function MyPlaylist() {
   const [recommendations, setRecommendations] = useState({
     friendRecommendations: [],
     ourRecom: [],
-    spotifyRecom: []
+    spotifyRecom: [],
+    aiRecom: []
   });
 
   useEffect(() => {
@@ -66,12 +67,19 @@ export default function MyPlaylist() {
         >
           Spotify Recommendations
         </button>
+        <button
+          onClick={() => handleSubpageChange("subpage4")}
+          className={selectedSubpage === "subpage4" ? "active" : ""}
+        >
+          AI Recommendations
+        </button>
       </div>
 
       <div className="subpage-content">
         {selectedSubpage === "subpage1" && <Subpage title = "Friend Recommendations" data = {recommendations.friendRecommendations}/>}
         {selectedSubpage === "subpage2" && <Subpage title = "Our Recommendations" data = {recommendations.ourRecom}/>}
         {selectedSubpage === "subpage3" && <Subpage title = "Spotify Recommendations" data = {recommendations.spotifyRecom}/>}
+        {selectedSubpage === "subpage4" && <Subpage title = "AI Recommendations" data = {recommendations.aiRecom}/>}
       </div>
     </div>
   );
