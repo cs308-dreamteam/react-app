@@ -94,41 +94,51 @@ const SongListHistogram = () => {
     }
   }, [songs, type, chartType]);
 
-  const generateChartData = (selectedType) => {
-    const dataMap = new Map();
+// ... (previous code)
 
-    songs.forEach((song) => {
-      const key =
-        selectedType === 'genre'
-          ? song.genre.toLowerCase()
-          : selectedType === 'artist'
-          ? song.artist.toLowerCase()
-          : song.album.toLowerCase();
+const getRandomColor = () => {
+  const randomColor = () => Math.floor(Math.random() * 256);
+  return `rgba(${randomColor()}, ${randomColor()}, ${randomColor()}, 0.6)`;
+};
 
-      const songSet = dataMap.get(key) || new Set();
-      songSet.add(song.song);
-      dataMap.set(key, songSet);
-    });
+const generateChartData = (selectedType) => {
+  const dataMap = new Map();
 
-    let labels = [...dataMap.keys()];
-    labels = labels.map((l) => toTitle(l));
-    const data = labels.map((key) => dataMap.get(key.toLowerCase()).size);
+  songs.forEach((song) => {
+    const key =
+      selectedType === 'genre'
+        ? song.genre.toLowerCase()
+        : selectedType === 'artist'
+        ? song.artist.toLowerCase()
+        : song.album.toLowerCase();
 
-    return {
-      labels,
-      datasets: [
-        {
-          label: `Number of ${selectedType}s`,
-          backgroundColor: 'rgba(255, 119, 0, 0.6)',
-          borderColor: 'rgba(255, 119, 0, 1)',
-          borderWidth: 1,
-          hoverBackgroundColor: 'rgba(255, 119, 0, 0.8)',
-          hoverBorderColor: 'rgba(255, 119, 0, 1)',
-          data,
-        },
-      ],
-    };
+    const songSet = dataMap.get(key) || new Set();
+    songSet.add(song.song);
+    dataMap.set(key, songSet);
+  });
+
+  let labels = [...dataMap.keys()];
+  labels = labels.map((l) => toTitle(l));
+  const data = labels.map(() => getRandomColor());
+
+  return {
+    labels,
+    datasets: [
+      {
+        label: `Number of ${selectedType}s`,
+        backgroundColor: data,
+        borderColor: 'rgba(255, 119, 0, 1)',
+        borderWidth: 1,
+        hoverBackgroundColor: data,
+        hoverBorderColor: 'rgba(255, 119, 0, 1)',
+        data: labels.map((key) => dataMap.get(key.toLowerCase()).size),
+      },
+    ],
   };
+};
+
+// ... (rest of the code)
+
 
   const getChartOptions = (selectedType) => {
     return {
